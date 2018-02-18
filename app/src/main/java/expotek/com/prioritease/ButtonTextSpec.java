@@ -1,4 +1,4 @@
-package expotek.com.PrioriTease;
+package expotek.com.prioritease;
 
 import android.text.Layout;
 

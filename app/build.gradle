@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "expotek.com.PrioriTease"
+        applicationId "expotek.com.prioritease"
         minSdkVersion 26
         targetSdkVersion 26
         versionCode 1
@@ -30,6 +30,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     // Litho
     implementation 'com.facebook.litho:litho-core:0.11.0'
+    implementation 'com.facebook.litho:litho-sections-core:0.11.0'
+    implementation 'com.facebook.litho:litho-sections-widget:0.11.0'
+    compileOnly 'com.facebook.litho:litho-sections-annotations:0.11.0'
+    annotationProcessor 'com.facebook.litho:litho-sections-processor:0.11.0'
     implementation 'com.facebook.litho:litho-widget:0.11.0'
     compileOnly 'com.facebook.litho:litho-annotations:0.11.0'
     annotationProcessor 'com.facebook.litho:litho-processor:0.11.0'

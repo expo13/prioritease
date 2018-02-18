@@ -1,4 +1,4 @@
-package expotek.com.PrioriTease;
+package expotek.com.prioritease;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,28 +19,23 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setSupportActionBar(toolbar);
 
         final ComponentContext c = new ComponentContext(this);
 
         final LithoView lithoView = LithoView.create(
                 this /* context */,
-//                Text.create(c)
-//                        .text("Hello, World!")
-//                        .textSizeDip(50)
-//                        .build());
-                MainLayout.create(c).desc("TESTING THE DESCRIPTION").title("THE TITLE").listener(this).build());
+                expotek.com.prioritease.MainLayout.create(c).desc("TESTING THE DESCRIPTION").title("THE TITLE").listener(this).build());
 
         setContentView(lithoView);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     @Override

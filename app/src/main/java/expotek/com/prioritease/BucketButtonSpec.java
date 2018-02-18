@@ -1,12 +1,10 @@
-package expotek.com.PrioriTease;
+package expotek.com.prioritease;
 
 import android.text.Layout;
 import android.view.View;
 
-
 import com.facebook.litho.ClickEvent;
 import com.facebook.litho.Column;
-import com.facebook.litho.Component;
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.ComponentLayout;
 import com.facebook.litho.annotations.FromEvent;
@@ -18,7 +16,7 @@ import com.facebook.litho.widget.Card;
 import com.facebook.yoga.YogaAlign;
 import com.facebook.yoga.YogaJustify;
 
-import static com.facebook.yoga.YogaEdge.ALL;
+import junit.framework.Test;
 
 
 @LayoutSpec

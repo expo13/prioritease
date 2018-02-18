@@ -1,25 +1,20 @@
-package expotek.com.PrioriTease;
+package expotek.com.prioritease;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
 import com.facebook.litho.Border;
 import com.facebook.litho.Column;
 import com.facebook.litho.Component;
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.ComponentLayout;
-import com.facebook.litho.StateValue;
 import com.facebook.litho.annotations.LayoutSpec;
-import com.facebook.litho.annotations.OnCreateInitialState;
 import com.facebook.litho.annotations.OnCreateLayout;
 import com.facebook.litho.annotations.Prop;
-import com.facebook.litho.annotations.State;
+import com.facebook.litho.sections.SectionContext;
+import com.facebook.litho.sections.widget.RecyclerCollectionComponent;
 import com.facebook.litho.widget.Text;
-import com.facebook.yoga.YogaAlign;
 import com.facebook.yoga.YogaEdge;
+
 
 @LayoutSpec
 public class MainLayoutSpec {
@@ -40,12 +35,16 @@ public class MainLayoutSpec {
                 .textSizeSp(17)
                 .build();
 
-        Component button = BucketButton.create(c).listener(listener).build();
+        final Component list =
+                RecyclerCollectionComponent.create(c)
+                        .disablePTR(true)
+                        .section(BucketList.create(new SectionContext(c)).build())
+                        .build();
 
         return Column.create(c)
                 .child(titleString)
                 .child(description)
-                .child(button)
+                .child(list)
                 .border(
                         Border.create(c)
                                 .color(YogaEdge.ALL, Color.BLACK)
