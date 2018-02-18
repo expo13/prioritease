@@ -1,5 +1,6 @@
 package expotek.com.prioritease;
 
+import android.graphics.Color;
 import android.text.Layout;
 import android.view.View;
 

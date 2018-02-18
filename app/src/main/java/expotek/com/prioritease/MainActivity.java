@@ -24,18 +24,18 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
 
         final LithoView lithoView = LithoView.create(
                 this /* context */,
-                expotek.com.prioritease.MainLayout.create(c).desc("TESTING THE DESCRIPTION").title("THE TITLE").listener(this).build());
+                MainLayout.create(c).desc("TESTING THE DESCRIPTION").title("THE TITLE").listener(this).build());
 
         setContentView(lithoView);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
     @Override

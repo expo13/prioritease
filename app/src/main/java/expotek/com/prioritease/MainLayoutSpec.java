@@ -35,10 +35,15 @@ public class MainLayoutSpec {
                 .textSizeSp(17)
                 .build();
 
-        final Component list =
+        Component list =
                 RecyclerCollectionComponent.create(c)
                         .disablePTR(true)
-                        .section(BucketList.create(new SectionContext(c)).build())
+                        .backgroundColor(Color.BLUE)
+                        .border( Border.create(c)
+                                .color(YogaEdge.ALL, Color.RED)
+                                .widthDip(YogaEdge.ALL, 2)
+                                .build())
+                        .section(BucketList.create(new SectionContext(c)).listener(listener).build())
                         .build();
 
         return Column.create(c)
