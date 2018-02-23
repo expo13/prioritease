@@ -44,6 +44,7 @@ public class MainLayoutSpec {
                                 .widthDip(YogaEdge.ALL, 2)
                                 .build())
                         .section(BucketList.create(new SectionContext(c)).listener(listener).build())
+                        .heightDip(120)
                         .build();
 
         return Column.create(c)
