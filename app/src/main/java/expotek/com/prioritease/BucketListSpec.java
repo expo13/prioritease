@@ -8,19 +8,22 @@ import com.facebook.litho.sections.annotations.OnCreateChildren;
 import com.facebook.litho.sections.common.SingleComponentSection;
 import com.facebook.litho.widget.Text;
 
+import java.util.List;
+
 @GroupSectionSpec
 public class BucketListSpec {
 
     @OnCreateChildren
-    static Children onCreateChildren(final SectionContext c, @Prop BucketButtonSpec.OnButtonClickListener listener) {
+    static Children onCreateChildren(final SectionContext c, @Prop List<Bucket> bucketList, @Prop BucketButtonSpec.OnButtonClickListener listener) {
         Children.Builder builder = Children.create();
 
-        for (int i = 0; i < 10; i++) {
+        for (Bucket b : bucketList) {
             builder.child(
                     SingleComponentSection.create(c)
-                            .key(String.valueOf(i))
-                            .component(BucketButton.create(c).listener(listener).build()));
+                            .key(b.getName())
+                            .component(BucketButton.create(c).buttonName(b.getName()).listener(listener).build()));
         }
+
         return builder.build();
     }
 }

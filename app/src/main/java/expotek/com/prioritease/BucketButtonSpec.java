@@ -24,7 +24,7 @@ import junit.framework.Test;
 public class BucketButtonSpec {
 
     @OnCreateLayout
-    static ComponentLayout onCreateLayout(ComponentContext c) {
+    static ComponentLayout onCreateLayout(ComponentContext c, @Prop String buttonName) {
         return Column.create(c)
                 .alignItems(YogaAlign.CENTER)
                 .justifyContent(YogaJustify.CENTER)
@@ -32,7 +32,7 @@ public class BucketButtonSpec {
                         .cardBackgroundColorRes(R.color.colorPrimary)
                         .cornerRadiusDip(2)
                         .elevationDip(2)
-                        .content(ButtonText.create(c).text("Button"))
+                        .content(ButtonText.create(c).text(buttonName))
                         .flexShrink(1)
                         .alignSelf(YogaAlign.CENTER))
                 .clickHandler(BucketButton.onClick(c))

@@ -14,6 +14,9 @@ import com.facebook.litho.ComponentContext;
 import com.facebook.litho.LithoView;
 import com.facebook.litho.widget.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements BucketButtonSpec.OnButtonClickListener {
 
     @Override
@@ -22,9 +25,15 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
 
         final ComponentContext c = new ComponentContext(this);
 
+        List<Bucket> bucketList = new ArrayList<Bucket>(6);
+
+        for (int x = 0; x < 5 ; x++) {
+            bucketList.add(new Bucket("Bucket "+x));
+        }
+
         final LithoView lithoView = LithoView.create(
                 this /* context */,
-                MainLayout.create(c).desc("TESTING THE DESCRIPTION").title("THE TITLE").listener(this).build());
+                MainLayout.create(c).title("SET YOUR PRIORITEASE").bucketList(bucketList).listener(this).build());
 
         setContentView(lithoView);
 
