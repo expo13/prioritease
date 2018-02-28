@@ -1,4 +1,4 @@
-package expotek.com.prioritease;
+package expotek.com.prioritease.views;
 
 import android.graphics.Color;
 import android.text.Layout;
@@ -17,8 +17,7 @@ import com.facebook.litho.widget.Card;
 import com.facebook.yoga.YogaAlign;
 import com.facebook.yoga.YogaJustify;
 
-import junit.framework.Test;
-
+import expotek.com.prioritease.R;
 
 @LayoutSpec
 public class BucketButtonSpec {
@@ -45,7 +44,7 @@ public class BucketButtonSpec {
         listener.onButtonClick();
     }
 
-    interface OnButtonClickListener {
+    public interface OnButtonClickListener {
         void onButtonClick();
     }
 

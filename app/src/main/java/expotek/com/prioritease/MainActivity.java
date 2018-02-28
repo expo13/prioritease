@@ -1,23 +1,37 @@
 package expotek.com.prioritease;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.facebook.litho.ClickEvent;
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.LithoView;
-import com.facebook.litho.widget.Text;
+import com.facebook.litho.annotations.FromEvent;
+import com.facebook.litho.annotations.OnEvent;
+import com.facebook.litho.annotations.Prop;
+import com.facebook.litho.sections.SectionContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements BucketButtonSpec.OnButtonClickListener {
+import expotek.com.prioritease.constants.Constants;
+import expotek.com.prioritease.views.BucketButtonSpec;
+import expotek.com.prioritease.views.FloatingButtonSpec;
+import expotek.com.prioritease.views.MainLayout;
+
+public class MainActivity extends AppCompatActivity implements BucketButtonSpec.OnButtonClickListener { //, FloatingButtonSpec.OnButtonClickListenerFloatingButton {
+
+    private List<Bucket> bucketList = new ArrayList<Bucket>();
+    private OnContactsRefresh onContactsRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,26 +39,27 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
 
         final ComponentContext c = new ComponentContext(this);
 
-        List<Bucket> bucketList = new ArrayList<Bucket>(6);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Permission to Contacts not granted", Toast.LENGTH_LONG).show();
 
-        for (int x = 0; x < 5 ; x++) {
-            bucketList.add(new Bucket("Bucket "+x));
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_CONTACTS},
+                    Constants.MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            onContactsRefresh.onContactsRefresh(, bucketList, this);
+
+        } else {
+            populateContactsBucket();
         }
 
         final LithoView lithoView = LithoView.create(
                 this /* context */,
-                MainLayout.create(c).title("SET YOUR PRIORITEASE").bucketList(bucketList).listener(this).build());
+                MainLayout.create(c).title("SET YOUR PRIORITEASE").bucketList(bucketList)
+//                        .floatingButtonListener(this)
+                        .listener(this).build());
 
         setContentView(lithoView);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     @Override
@@ -73,5 +88,41 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
     @Override
     public void onButtonClick() {
         Toast.makeText(this, "This litho button works!", Toast.LENGTH_LONG).show();
+    }
+
+//    @Override
+//    public void onFloatingButtonClick() {
+//        Toast.makeText(this, "AND! This litho button works!", Toast.LENGTH_LONG).show();
+//    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case Constants.MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    populateContactsBucket();
+                } else {
+
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
+    private void populateContactsBucket(){
+        List<String> listOfContacts = ContactsController.getContactList(this);
+        for (String contactName : listOfContacts) {
+            bucketList.add(new Bucket(contactName));
+        }
+    }
+
+    public interface OnContactsRefresh {
+        void onContactsRefresh(SectionContext c, List<Bucket> bucketList, BucketButtonSpec.OnButtonClickListener listener );
     }
 }

@@ -1,4 +1,4 @@
-package expotek.com.prioritease;
+package expotek.com.prioritease.views;
 
 import android.text.Layout;
 

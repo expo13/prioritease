@@ -1,4 +1,6 @@
-package expotek.com.prioritease;
+package expotek.com.prioritease.views;
+
+import android.content.Context;
 
 import com.facebook.litho.annotations.Prop;
 import com.facebook.litho.sections.Children;
@@ -6,12 +8,14 @@ import com.facebook.litho.sections.SectionContext;
 import com.facebook.litho.sections.annotations.GroupSectionSpec;
 import com.facebook.litho.sections.annotations.OnCreateChildren;
 import com.facebook.litho.sections.common.SingleComponentSection;
-import com.facebook.litho.widget.Text;
 
 import java.util.List;
 
+import expotek.com.prioritease.Bucket;
+import expotek.com.prioritease.MainActivity;
+
 @GroupSectionSpec
-public class BucketListSpec {
+public class BucketListSpec implements MainActivity.OnContactsRefresh {
 
     @OnCreateChildren
     static Children onCreateChildren(final SectionContext c, @Prop List<Bucket> bucketList, @Prop BucketButtonSpec.OnButtonClickListener listener) {
@@ -25,5 +29,10 @@ public class BucketListSpec {
         }
 
         return builder.build();
+    }
+
+    @Override
+    public void onContactsRefresh(SectionContext c, List<Bucket> bucketList, BucketButtonSpec.OnButtonClickListener listener) {
+        onCreateChildren(c, bucketList, listener);
     }
 }
