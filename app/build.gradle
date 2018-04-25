@@ -19,7 +19,7 @@ android {
     }
     externalNativeBuild {
         cmake {
-            version "3.7.1"
+            version "version 3.11.1"
         }
     }
 }

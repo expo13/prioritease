@@ -21,18 +21,20 @@ public class BucketListSpec implements MainActivity.OnContactsRefresh {
     static Children onCreateChildren(final SectionContext c, @Prop List<Bucket> bucketList, @Prop BucketButtonSpec.OnButtonClickListener listener) {
         Children.Builder builder = Children.create();
 
+        int x=0;
         for (Bucket b : bucketList) {
             builder.child(
                     SingleComponentSection.create(c)
-                            .key(b.getName())
+                            .key(b.getName()+x)
                             .component(BucketButton.create(c).buttonName(b.getName()).listener(listener).build()));
+            x++;
         }
 
         return builder.build();
     }
 
-    @Override
-    public void onContactsRefresh(SectionContext c, List<Bucket> bucketList, BucketButtonSpec.OnButtonClickListener listener) {
-        onCreateChildren(c, bucketList, listener);
-    }
+//    @Override
+//    public void onContactsRefresh(SectionContext c, List<Bucket> bucketList, BucketButtonSpec.OnButtonClickListener listener) {
+//        onCreateChildren(c, bucketList, listener);
+//    }
 }

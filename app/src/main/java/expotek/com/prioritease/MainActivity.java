@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
     private List<Bucket> bucketList = new ArrayList<Bucket>();
     private OnContactsRefresh onContactsRefresh;
 
+    private boolean contactsNeedToBeRefreshed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_CONTACTS},
                     Constants.MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-            onContactsRefresh.onContactsRefresh(, bucketList, this);
+//            this.onCreate(null); TODO likely take this out
+//            onContactsRefresh.onContactsRefresh(, bucketList, this);
 
         } else {
             populateContactsBucket();
@@ -61,6 +65,16 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
         setContentView(lithoView);
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        Log.d("MainActivity", ".onResume");
+        if (contactsNeedToBeRefreshed){
+            populateContactsBucket();
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,9 +134,10 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
         for (String contactName : listOfContacts) {
             bucketList.add(new Bucket(contactName));
         }
+        contactsNeedToBeRefreshed=false;
     }
 
     public interface OnContactsRefresh {
-        void onContactsRefresh(SectionContext c, List<Bucket> bucketList, BucketButtonSpec.OnButtonClickListener listener );
+//        void onContactsRefresh(SectionContext c, List<Bucket> bucketList, BucketButtonSpec.OnButtonClickListener listener );
     }
 }
