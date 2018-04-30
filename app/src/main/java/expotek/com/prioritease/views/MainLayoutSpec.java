@@ -19,6 +19,8 @@ import com.facebook.litho.annotations.OnEvent;
 import com.facebook.litho.annotations.Prop;
 import com.facebook.litho.sections.SectionContext;
 import com.facebook.litho.sections.widget.RecyclerCollectionComponent;
+import com.facebook.litho.sections.widget.RecyclerCollectionComponentSpec;
+import com.facebook.litho.sections.widget.RecyclerCollectionEventsController;
 import com.facebook.litho.widget.Text;
 import com.facebook.yoga.YogaAlign;
 import com.facebook.yoga.YogaEdge;
@@ -37,7 +39,9 @@ public class MainLayoutSpec {
     static ComponentLayout onCreateLayout(final ComponentContext c,
                                           @Prop List<Bucket> bucketList,
                                           @Prop String title,
-                                          @Prop BucketButtonSpec.OnButtonClickListener listener
+                                          @Prop BucketButtonSpec.OnButtonClickListener listener,
+                                          @Prop RecyclerCollectionEventsController recyclerCollectionEventsController,
+                                          RecyclerCollectionComponentSpec.RecyclerConfiguration recyclerConfiguration
 //                                          ,@Prop FloatingButtonSpec.OnButtonClickListenerFloatingButton floatingButtonListener
     ) {
 
@@ -51,10 +55,12 @@ public class MainLayoutSpec {
 
         Component list =
                 RecyclerCollectionComponent.create(c)
+                        .recyclerConfiguration(recyclerConfiguration)
                         .disablePTR(true)
-                        .backgroundColor(Color.GREEN)
+                        .backgroundColor(Color.RED)
                         .alpha((float) .5)
                         .flexGrow(1)
+                        .eventsController(recyclerCollectionEventsController)
                         .section(BucketList.create(new SectionContext(c)).bucketList(bucketList).listener(listener).build())
                         .heightDip(360)
                         .build();

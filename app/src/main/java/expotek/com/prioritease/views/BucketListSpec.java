@@ -15,7 +15,7 @@ import expotek.com.prioritease.Bucket;
 import expotek.com.prioritease.MainActivity;
 
 @GroupSectionSpec
-public class BucketListSpec implements MainActivity.OnContactsRefresh {
+public class BucketListSpec {
 
     @OnCreateChildren
     static Children onCreateChildren(final SectionContext c, @Prop List<Bucket> bucketList, @Prop BucketButtonSpec.OnButtonClickListener listener) {
@@ -32,9 +32,4 @@ public class BucketListSpec implements MainActivity.OnContactsRefresh {
 
         return builder.build();
     }
-
-//    @Override
-//    public void onContactsRefresh(SectionContext c, List<Bucket> bucketList, BucketButtonSpec.OnButtonClickListener listener) {
-//        onCreateChildren(c, bucketList, listener);
-//    }
 }

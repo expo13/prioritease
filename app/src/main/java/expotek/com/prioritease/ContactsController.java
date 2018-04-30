@@ -35,22 +35,26 @@ public class ContactsController {
                         cur.getColumnIndex(ContactsContract.Contacts._ID));
                 String name = cur.getString(cur.getColumnIndex(
                         ContactsContract.Contacts.DISPLAY_NAME));
+
+                //
+                if (name.contains("@")){continue;}
+
                 listOfNames.add(name);
-                if (cur.getInt(cur.getColumnIndex(
-                        ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
-                    Cursor pCur = cr.query(
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                            new String[]{id}, null);
-                    while (pCur.moveToNext()) {
-                        String phoneNo = pCur.getString(pCur.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        Log.i(TAG, "Name: " + name);
-                        Log.i(TAG, "Phone Number: " + phoneNo);
-                    }
-                    pCur.close();
-                }
+//                if (cur.getInt(cur.getColumnIndex(
+//                        ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
+//                    Cursor pCur = cr.query(
+//                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+//                            null,
+//                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+//                            new String[]{id}, null);
+//                    while (pCur.moveToNext()) {
+//                        String phoneNo = pCur.getString(pCur.getColumnIndex(
+//                                ContactsContract.CommonDataKinds.Phone.NUMBER));
+//                        Log.i(TAG, "Name: " + name);
+//                        Log.i(TAG, "Phone Number: " + phoneNo);
+//                    }
+//                    pCur.close();
+//                }
             }
         }
         if(cur!=null){

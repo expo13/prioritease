@@ -19,7 +19,11 @@ import com.facebook.litho.LithoView;
 import com.facebook.litho.annotations.FromEvent;
 import com.facebook.litho.annotations.OnEvent;
 import com.facebook.litho.annotations.Prop;
+import com.facebook.litho.sections.LoadEventsHandler;
 import com.facebook.litho.sections.SectionContext;
+import com.facebook.litho.sections.widget.ListRecyclerConfiguration;
+import com.facebook.litho.sections.widget.RecyclerCollectionComponentSpec;
+import com.facebook.litho.sections.widget.RecyclerCollectionEventsController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +36,15 @@ import expotek.com.prioritease.views.MainLayout;
 public class MainActivity extends AppCompatActivity implements BucketButtonSpec.OnButtonClickListener { //, FloatingButtonSpec.OnButtonClickListenerFloatingButton {
 
     private List<Bucket> bucketList = new ArrayList<Bucket>();
-    private OnContactsRefresh onContactsRefresh;
-
-    private boolean contactsNeedToBeRefreshed;
+    private RecyclerCollectionEventsController recyclerCollectionEventsController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final ComponentContext c = new ComponentContext(this);
+        recyclerCollectionEventsController = new RecyclerCollectionEventsController();
+
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -49,8 +53,6 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_CONTACTS},
                     Constants.MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-//            this.onCreate(null); TODO likely take this out
-//            onContactsRefresh.onContactsRefresh(, bucketList, this);
 
         } else {
             populateContactsBucket();
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
 
         final LithoView lithoView = LithoView.create(
                 this /* context */,
-                MainLayout.create(c).title("SET YOUR PRIORITEASE").bucketList(bucketList)
+                MainLayout.create(c).title("SET YOUR PRIORITEASE").bucketList(bucketList).recyclerCollectionEventsController(recyclerCollectionEventsController)
 //                        .floatingButtonListener(this)
                         .listener(this).build());
 
@@ -66,13 +68,12 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
 
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
         Log.d("MainActivity", ".onResume");
-        if (contactsNeedToBeRefreshed){
-            populateContactsBucket();
-        }
     }
 
 
@@ -118,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     populateContactsBucket();
+                    recyclerCollectionEventsController.requestRefresh(true);
                 } else {
 
                 }
@@ -134,10 +136,7 @@ public class MainActivity extends AppCompatActivity implements BucketButtonSpec.
         for (String contactName : listOfContacts) {
             bucketList.add(new Bucket(contactName));
         }
-        contactsNeedToBeRefreshed=false;
+
     }
 
-    public interface OnContactsRefresh {
-//        void onContactsRefresh(SectionContext c, List<Bucket> bucketList, BucketButtonSpec.OnButtonClickListener listener );
-    }
 }
